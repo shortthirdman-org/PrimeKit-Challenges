@@ -1,0 +1,120 @@
+name: Maven Release Workflow
+
+run-name: Publish Artifacts by @${{ github.actor }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      releaseVersion:
+        description: 'Release version to set in pom (e.g. 1.2.3)'
+        required: true
+      developmentVersion:
+        description: 'Next development version after release (e.g. 1.2.4-SNAPSHOT)'
+        required: true
+
+permissions:
+  contents: write
+  packages: read
+  statuses: write # To report GitHub Actions status checks
+  actions: write # Needed for detection of GitHub Actions environment.
+  id-token: write # Needed for provenance signing and ID.
+  pull-requests: write
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+
+      - name: Verify Maven and Java
+        run: |
+          java --version
+          mvn -version
+
+      - name: Configure Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Set release version in POM
+        run: |
+          mvn -B versions:set -DnewVersion=${{ github.event.inputs.releaseVersion }} -DgenerateBackupPoms=false
+          git add -A
+          git commit -m "chore(release): set version ${{ github.event.inputs.releaseVersion }}" || echo "No changes to commit"
+
+      - name: Create and push tag
+        run: |
+          TAG="v${{ github.event.inputs.releaseVersion }}"
+          git tag -a "$TAG" -m "Release $TAG"
+          git push origin HEAD
+          git push origin "$TAG"
+
+      - name: Build, test and generate reports
+        run: mvn -B clean install verify test jacoco:report
+
+      - name: Collect artifacts
+        run: |
+          mkdir -p artifacts
+          cp target/*.jar artifacts/ || true
+          [ -d target/reports ] && cp -r target/reports artifacts/ || true
+          [ -d target/site/jacoco ] && cp -r target/site/jacoco artifacts/ || true
+
+      - name: Zip reports
+        run: |
+          cd artifacts
+          zip -r reports.zip surefire-reports jacoco || true
+          ls -lh
+
+      - name: Generate release notes
+        run: |
+          TAG="v${{ github.event.inputs.releaseVersion }}"
+          PREV_TAG=$(git tag --sort=-creatordate | grep -v "^${TAG}$" | head -n 1 || true)
+          mkdir -p artifacts
+          if [ -n "$PREV_TAG" ]; then
+            git log --pretty=format:'- %s (%an)' ${PREV_TAG}..HEAD > artifacts/release-notes.md || true
+          else
+            git log --pretty=format:'- %s (%an)' -n 50 HEAD > artifacts/release-notes.md || true
+          fi
+          [ -s artifacts/release-notes.md ] || echo "(No notable commits)" > artifacts/release-notes.md
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ github.event.inputs.releaseVersion }}
+          name: Release v${{ github.event.inputs.releaseVersion }}
+          body_path: artifacts/release-notes.md
+          files: |
+            artifacts/*.jar
+            artifacts/reports.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Bump to development version
+        run: |
+          mvn -B versions:set -DnewVersion=${{ github.event.inputs.developmentVersion }} -DgenerateBackupPoms=false
+          git add pom.xml
+          git commit -m "chore: bump version to ${{ github.event.inputs.developmentVersion }}" || echo "No changes to commit"
+          git push origin HEAD
+
+      - name: Upload workflow artifacts (optional)
+        uses: actions/upload-artifact@v4
+        with:
+          name: maven-artifacts
+          path: artifacts/
+          if-no-files-found: warn
+          retention-days: 14
