@@ -38,7 +38,7 @@ PrimeKit Coding Challenges
  </tr>
 </table>
 
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/shortthirdman/PrimeKit-Challenges)	![GitHub repo size](https://img.shields.io/github/repo-size/shortthirdman/PrimeKit-Challenges)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/shortthirdman-org/PrimeKit-Challenges)	![GitHub repo size](https://img.shields.io/github/repo-size/shortthirdman-org/PrimeKit-Challenges)
 
 ---
 
@@ -61,10 +61,13 @@ PrimeKit Coding Challenges
 		<img height="40" width="40" src="https://cdn.simpleicons.org/openjdk?viewbox=auto" alt="OpenJDK" />
 	  </a>
 	</td>
+	<td style="padding:10px;">
+	  <a href="https://junit.org/" title="JUnit">
+		<img height="40" width="40" src="https://cdn.simpleicons.org/junit5?viewbox=auto" alt="JUnit 5" />
+	  </a>
+	</td>
  </tr>
 </table>
-
-<!-- <img height="40" width="40" src="https://cdn.simpleicons.org/junit5?viewbox=auto" /> -->
 
 ---
 
@@ -82,8 +85,8 @@ PrimeKit Coding Challenges
 
 👤 **Swetank Mohanty**
 
-* Website: https://shortthirdman.medium.com/
-* Twitter: [@ShortThirdMan93](https://twitter.com/ShortThirdMan93)
+* Medium: https://medium.com/@shortthirdman
+* X (formerly Twitter): [@ShortThirdMan93](https://x.com/ShortThirdMan93)
 * Github: [@shortthirdman](https://github.com/shortthirdman)
 * LinkedIn: [@shortthirdman](https://linkedin.com/in/shortthirdman)
 
@@ -91,7 +94,7 @@ PrimeKit Coding Challenges
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/shortthirdman-org/Google-Colab-Notebooks/issues). 
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](https://github.com/shortthirdman-org/PrimeKit-Challenges/issues). 
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)
 [![first-timers-only](https://img.shields.io/badge/first--timers--only-friendly-blue.svg?style=flat-square)](https://www.firsttimersonly.com/)
