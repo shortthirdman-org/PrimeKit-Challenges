@@ -6,10 +6,12 @@ import com.shortthirdman.primekit.core.strategy.LuxuryTaxCalculation;
 import com.shortthirdman.primekit.core.strategy.PremiumTaxCalculation;
 import com.shortthirdman.primekit.core.strategy.StandardTaxCalculation;
 import com.shortthirdman.primekit.core.strategy.TaxCalculationStrategy;
+import lombok.RequiredArgsConstructor;
 
 import java.util.Objects;
 
 /**
+ * Calculates tax by category and strategy
  * @since 1.1.1
  * @author ShortThirdMan
  */
@@ -19,7 +21,7 @@ public class PatternAnalyzer {
 
     public double calculateTaxByStrategy(double baseAmount, ProductCategory category) {
         if (Objects.isNull(category)) {
-            throw new NullPointerException("Category is null");
+            throw new IllegalArgumentException("Category is null");
         }
 
         TaxCalculationStrategy strategy = switch (category) {
@@ -39,7 +41,7 @@ public class PatternAnalyzer {
 
     public double calculateTaxByCategory(double baseAmount, ProductCategory category) {
         if (Objects.isNull(category)) {
-            throw new NullPointerException("Category is null");
+            throw new IllegalArgumentException("Category is null");
         }
 
         TaxCalculator calculator = switch (category) {
