@@ -35,6 +35,11 @@ PrimeKit Coding Challenges
             <img height="40" width="40" src="https://cdn.simpleicons.org/codility?viewbox=auto" alt="Codility" />
         </a>
     </td>
+    <td style="padding:10px;">
+        <a href="https://coderbyte.com/" title="Visit CoderByte">
+            <img height="40" width="40" src="https://cdn.simpleicons.org/coderbyte?viewbox=auto" alt="CoderByte" />
+        </a>
+    </td>
  </tr>
 </table>
 
@@ -56,6 +61,11 @@ PrimeKit Coding Challenges
 		<img height="40" width="40" src="https://cdn.simpleicons.org/intellijidea?viewbox=auto" alt="IntelliJ IDEA" />
 	  </a>
 	</td>
+    <td style="padding:10px;">
+        <a href="https://www.jetbrains.com" title="JetBrains">
+            <img height="40" width="40" src="https://cdn.simpleicons.org/jetbrains?viewbox=auto" alt="JetBrains" />
+        </a>
+    </td>
 	<td style="padding:10px;">
 	  <a href="https://openjdk.org/" title="OpenJDK">
 		<img height="40" width="40" src="https://cdn.simpleicons.org/openjdk?viewbox=auto" alt="OpenJDK" />
