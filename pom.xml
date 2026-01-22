@@ -35,6 +35,7 @@
     <buildtime.output.log>true</buildtime.output.log>
 
     <lombok.version>1.18.32</lombok.version>
+    <mockito.version>5.20.0</mockito.version>
     <junit-jupiter.version>5.10.2</junit-jupiter.version>
     <junit-platform.version>1.10.2</junit-platform.version>
     <commons-lang3.version>3.14.0</commons-lang3.version>
@@ -140,17 +141,23 @@
       <version>${instancio.version}</version>
       <scope>test</scope>
     </dependency>
-      <dependency>
-          <groupId>org.junit.jupiter</groupId>
-          <artifactId>junit-jupiter</artifactId>
-          <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>org.mockito</groupId>
-        <artifactId>mockito-core</artifactId>
-        <version>${mockito.version}</version>
-        <scope>test</scope>
-      </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-junit-jupiter</artifactId>
+      <version>${mockito.version}</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>
@@ -250,6 +257,7 @@
           <testFailureIgnore>true</testFailureIgnore>
           <excludes>
             <exclude>*com.shortthirdman.primekit.common.*</exclude>
+            <exclude>*com.shortthirdman.primekit.core.*</exclude>
           </excludes>
           <properties>
             <configurationParameters>
@@ -280,6 +288,7 @@
           <sourceEncoding>${project.build.sourceEncoding}</sourceEncoding>
           <excludes>
             <exclude>com/shortthirdman/primekit/common/**/*.java</exclude>
+            <exclude>com/shortthirdman/primekit/core/**/*.java</exclude>
           </excludes>
           <outputEncoding>${project.build.sourceEncoding}</outputEncoding>
           <formats>
