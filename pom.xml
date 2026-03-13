@@ -165,6 +165,35 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.21.0</version>
+        <configuration>
+          <generatedSiteDirectory>${basedir}/docs</generatedSiteDirectory>
+          <outputDirectory>${basedir}/docs</outputDirectory>
+          <generateProjectInfo>true</generateProjectInfo>
+          <generateReports>true</generateReports>
+          <generateSitemap>true</generateSitemap>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.maven.skins</groupId>
+            <artifactId>maven-fluido-skin</artifactId>
+            <version>2.1.0</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <phase>site</phase>
+            <goals>
+              <goal>attach-descriptor</goal>
+              <goal></goal>
+            </goals>
+            <id>attach-site-descriptor</id>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
         <version>${pmd-maven-plugin.version}</version>
         <configuration>
@@ -398,12 +427,9 @@
           <doclint>none</doclint>
           <show>public</show>
           <failOnError>false</failOnError>
-          <!--<links>
+          <links>
             <link>https://docs.oracle.com/en/java/javase/${java.version}/docs/api/index.html</link>
-            <link>https://commons.apache.org/proper/commons-lang/apidocs/index.html</link>
-            <link>https://gson.java.net/apidocs/gson-2.10.1/index.html</link>
-            <link>https://assertj.github.io/doc/3.25.3/api/index.html</link>
-          </links>-->
+          </links>
         </configuration>
         <executions>
           <execution>
@@ -415,6 +441,15 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>3.9.0</version>
+        <configuration>
+          <version>${project.version}</version>
+          <dependencyDetailsEnabled>true</dependencyDetailsEnabled>
+        </configuration>
       </plugin>
     </plugins>
   </build>
