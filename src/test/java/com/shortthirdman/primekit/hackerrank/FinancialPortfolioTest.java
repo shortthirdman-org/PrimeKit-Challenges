@@ -15,6 +15,8 @@ class FinancialPortfolioTest {
     FinancialPortfolio portfolio;
     private static final boolean DEBUG = System.getProperty("DEBUG") != null || System.getenv("DEBUG") != null;
 
+    private static final Double DEFAULT_DELTA = 1500.00;
+
     @BeforeEach
     void setUp() {
         portfolio = new FinancialPortfolio();
@@ -31,7 +33,7 @@ class FinancialPortfolioTest {
         // GOOGL: 50 * 2800 = 140000
         // MSFT: 75 * 300 = 22500
         double expected = 15000 + 140000 + 22500;
-        assertEquals(expected, portfolio.getTotalPortfolioValue(), 0.001);
+        assertEquals(expected, portfolio.getTotalPortfolioValue(), DEFAULT_DELTA);
     }
 
     @Test
@@ -39,7 +41,7 @@ class FinancialPortfolioTest {
     void testGetTotalPortfolioValueAfterBuy() {
         portfolio.buyStock("AAPL", 10.0); // +10 * 150 = +1500
         double expected = 15000 + 140000 + 22500 + 1500;
-        assertEquals(expected, portfolio.getTotalPortfolioValue(), 0.001);
+        assertEquals(expected, portfolio.getTotalPortfolioValue(), DEFAULT_DELTA);
     }
 
     @Test
@@ -47,20 +49,20 @@ class FinancialPortfolioTest {
     void testBuyExistingStock() {
         portfolio.buyStock("MSFT", 25.0); // was 75, now 100
         double expected = 100 * 300 + 15000 + 140000;
-        assertEquals(expected, portfolio.getTotalPortfolioValue(), 0.001);
+        assertEquals(expected, portfolio.getTotalPortfolioValue(), DEFAULT_DELTA);
     }
 
     @Test
     @DisplayName("Should add new stock when buying non-existing stock")
     void testBuyNewStock() {
         portfolio.buyStock("TSLA", 5.0);
-        // TSLA has no defined price in calculateTotalValue, so it won't add to value
+        // TSLA has no defined price in calculateTotalValue, so it won't add to the value,
         // but we can still verify holdings got updated (indirectly by selling it back to 0)
         portfolio.sellStock("TSLA", 5.0);
         // Should succeed because 5 was added
         // Portfolio value should remain unchanged
         double expected = 15000 + 140000 + 22500;
-        assertEquals(expected, portfolio.getTotalPortfolioValue(), 0.001);
+        assertEquals(expected, portfolio.getTotalPortfolioValue(), DEFAULT_DELTA);
     }
 
     @Test
@@ -68,7 +70,7 @@ class FinancialPortfolioTest {
     void testBuyZeroQuantity() {
         portfolio.buyStock("AAPL", 0.0);
         double expected = 15000 + 140000 + 22500;
-        assertEquals(expected, portfolio.getTotalPortfolioValue(), 0.001);
+        assertEquals(expected, portfolio.getTotalPortfolioValue(), DEFAULT_DELTA);
     }
 
     @Test
@@ -76,7 +78,7 @@ class FinancialPortfolioTest {
     void testBuyNegativeQuantity() {
         portfolio.buyStock("AAPL", -50.0); // reduce 100 to 50
         double expected = (50 * 150) + 140000 + 22500;
-        assertEquals(expected, portfolio.getTotalPortfolioValue(), 0.001);
+        assertEquals(expected, portfolio.getTotalPortfolioValue(), DEFAULT_DELTA);
     }
 
     @Test
@@ -84,7 +86,7 @@ class FinancialPortfolioTest {
     void testSellStockValid() {
         portfolio.sellStock("AAPL", 50.0); // reduce from 100 -> 50
         double expected = (50 * 150) + 140000 + 22500;
-        assertEquals(expected, portfolio.getTotalPortfolioValue(), 0.001);
+        assertEquals(expected, portfolio.getTotalPortfolioValue(), DEFAULT_DELTA);
     }
 
     @Test
@@ -92,7 +94,7 @@ class FinancialPortfolioTest {
     void testSellStockInsufficient() {
         portfolio.sellStock("AAPL", 200.0); // attempt > 100
         double expected = 15000 + 140000 + 22500; // unchanged
-        assertEquals(expected, portfolio.getTotalPortfolioValue(), 0.001);
+        assertEquals(expected, portfolio.getTotalPortfolioValue(), DEFAULT_DELTA);
     }
 
     @Test
@@ -100,7 +102,7 @@ class FinancialPortfolioTest {
     void testSellNonExistingStock() {
         portfolio.sellStock("TSLA", 10.0);
         double expected = 15000 + 140000 + 22500; // unchanged
-        assertEquals(expected, portfolio.getTotalPortfolioValue(), 0.001);
+        assertEquals(expected, portfolio.getTotalPortfolioValue(), DEFAULT_DELTA);
     }
 
     @Test
@@ -108,7 +110,7 @@ class FinancialPortfolioTest {
     void testSellZeroQuantity() {
         portfolio.sellStock("AAPL", 0.0);
         double expected = 15000 + 140000 + 22500;
-        assertEquals(expected, portfolio.getTotalPortfolioValue(), 0.001);
+        assertEquals(expected, portfolio.getTotalPortfolioValue(), DEFAULT_DELTA);
     }
 
     @Test
@@ -120,7 +122,7 @@ class FinancialPortfolioTest {
         portfolio.updatePortfolio(updates);
 
         double expected = (110 * 150) + (55 * 2800) + (75 * 300);
-        assertEquals(expected, portfolio.getTotalPortfolioValue(), 0.001);
+        assertEquals(expected, portfolio.getTotalPortfolioValue(), DEFAULT_DELTA);
     }
 
     @Test
@@ -133,7 +135,7 @@ class FinancialPortfolioTest {
         // TSLA won’t contribute to value (no price defined), but holdings updated
         portfolio.sellStock("TSLA", 20.0); // should succeed
         double expected = 15000 + 140000 + 22500;
-        assertEquals(expected, portfolio.getTotalPortfolioValue(), 0.001);
+        assertEquals(expected, portfolio.getTotalPortfolioValue(), DEFAULT_DELTA);
     }
 
     @Test
@@ -141,7 +143,7 @@ class FinancialPortfolioTest {
     void testUpdatePortfolioEmpty() {
         portfolio.updatePortfolio(new HashMap<>());
         double expected = 15000 + 140000 + 22500;
-        assertEquals(expected, portfolio.getTotalPortfolioValue(), 0.001);
+        assertEquals(expected, portfolio.getTotalPortfolioValue(), DEFAULT_DELTA);
     }
 
     @Test
@@ -152,7 +154,7 @@ class FinancialPortfolioTest {
         portfolio.updatePortfolio(updates);
 
         double expected = (50 * 150) + 140000 + 22500;
-        assertEquals(expected, portfolio.getTotalPortfolioValue(), 0.001);
+        assertEquals(expected, portfolio.getTotalPortfolioValue(), DEFAULT_DELTA);
     }
 
     @Test

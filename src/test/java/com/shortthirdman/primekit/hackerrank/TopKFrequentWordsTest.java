@@ -174,4 +174,176 @@ class TopKFrequentWordsTest {
         // 'apple' frequency = 2, 'Apple', 'Banana', 'banana' each = 1
         assertEquals(Arrays.asList("apple", "Apple", "Banana"), result);
     }
+
+    // ------------------------------------------------
+    // POSITIVE TEST CASES
+    // ------------------------------------------------
+
+    @Test
+    void testBasicTopKFrequent() {
+        String[] words = {"i","love","leetcode","i","love","coding"};
+        List<String> result = app.optimizeTopKFrequent(words, 2);
+
+        assertEquals(Arrays.asList("i","love"), result);
+    }
+
+    @Test
+    void testSingleElementArray() {
+        String[] words = {"hello"};
+        List<String> result = app.optimizeTopKFrequent(words, 1);
+
+        assertEquals(Collections.singletonList("hello"), result);
+    }
+
+    @Test
+    void testAllWordsSame() {
+        String[] words = {"java","java","java","java"};
+        List<String> result = app.optimizeTopKFrequent(words, 1);
+
+        assertEquals(Collections.singletonList("java"), result);
+    }
+
+    @Test
+    void testKEqualsUniqueWords() {
+        String[] words = {"a","b","c"};
+        List<String> result = app.optimizeTopKFrequent(words, 3);
+
+        assertEquals(Arrays.asList("a","b","c"), result);
+    }
+
+    // ------------------------------------------------
+    // LEXICOGRAPHICAL TIE BREAK TESTS
+    // ------------------------------------------------
+
+    @Test
+    void testLexicographicOrderingWhenFrequencySame() {
+        String[] words = {"b","a","c","a","b","c"};
+        List<String> result = app.optimizeTopKFrequent(words, 3);
+
+        assertEquals(Arrays.asList("a","b","c"), result);
+    }
+
+    @Test
+    void testLexicographicTieBreaking() {
+        String[] words = {"dog","cat","apple","cat","dog","apple"};
+        List<String> result = app.optimizeTopKFrequent(words, 3);
+
+        assertEquals(Arrays.asList("apple","cat","dog"), result);
+    }
+
+    // ------------------------------------------------
+    // EDGE CASES
+    // ------------------------------------------------
+
+    @Test
+    void testOptimizedKGreaterThanUniqueWords() {
+        String[] words = {"a","b","b"};
+        List<String> result = app.optimizeTopKFrequent(words, 10);
+
+        assertEquals(Arrays.asList("b","a"), result);
+    }
+
+    @Test
+    void testKZero() {
+        String[] words = {"a","b"};
+        List<String> result = app.optimizeTopKFrequent(words, 0);
+
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void testNegativeK() {
+        String[] words = {"a","b"};
+        List<String> result = app.optimizeTopKFrequent(words, -5);
+
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void testEmptyArray() {
+        String[] words = {};
+        List<String> result = app.optimizeTopKFrequent(words, 2);
+
+        assertTrue(result.isEmpty());
+    }
+
+    @Test
+    void testNullInputArray() {
+        List<String> result = app.optimizeTopKFrequent(null, 2);
+
+        assertTrue(result.isEmpty());
+    }
+
+    // ------------------------------------------------
+    // NULL VALUE HANDLING
+    // ------------------------------------------------
+
+    @Test
+    void testArrayContainingNullValues() {
+        String[] words = {"apple", null, "apple", "banana", null};
+
+        List<String> result = app.optimizeTopKFrequent(words, 3);
+
+        assertEquals(Arrays.asList("apple", null, "banana"), result);
+    }
+
+    @Test
+    void testOnlyNullValues() {
+        String[] words = {null, null, null};
+
+        List<String> result = app.optimizeTopKFrequent(words, 1);
+
+        assertEquals(Collections.singletonList(null), result);
+    }
+
+    // ------------------------------------------------
+    // CASE SENSITIVITY TEST
+    // ------------------------------------------------
+
+    @Test
+    void testOptimizedCaseSensitivity() {
+        String[] words = {"Apple","apple","APPLE","apple"};
+
+        List<String> result = app.optimizeTopKFrequent(words, 2);
+
+        assertEquals(Arrays.asList("apple","APPLE"), result);
+    }
+
+    // ------------------------------------------------
+    // LARGE DATASET TEST
+    // ------------------------------------------------
+
+    @Test
+    void testLargeDatasetPerformance() {
+
+        String[] words = new String[10000];
+
+        for(int i = 0; i < 5000; i++)
+            words[i] = "java";
+
+        for(int i = 5000; i < 8000; i++)
+            words[i] = "python";
+
+        for(int i = 8000; i < 10000; i++)
+            words[i] = "go";
+
+        List<String> result = app.optimizeTopKFrequent(words, 2);
+
+        assertEquals(Arrays.asList("java","python"), result);
+    }
+
+    // ------------------------------------------------
+    // IMMUTABILITY / SUBLIST BEHAVIOR
+    // ------------------------------------------------
+
+    @Test
+    void testReturnedListContainsCorrectSize() {
+
+        String[] words = {"x","y","y","z","z","z"};
+
+        List<String> result = app.optimizeTopKFrequent(words, 2);
+
+        assertEquals(2, result.size());
+        assertEquals(Arrays.asList("z","y"), result);
+    }
 }

@@ -68,7 +68,8 @@ public class CountDistinctSlices {
             }
 
             // Add the number of distinct slices ending at 'right'
-            distinctSlices = (distinctSlices + (right - left + 1)) % MOD;
+            var windowSize = right - left + 1;
+            distinctSlices = (distinctSlices + windowSize) % MOD;
         }
 
         // Return the result (casting to int)

@@ -1,6 +1,18 @@
 package com.shortthirdman.primekit.hackerrank;
 
-@SuppressWarnings("PMD.UselessParentheses")
+/**
+ * This class evaluates the winner of a competition between Erica and Bob based on their scores.
+ * Each character in their respective strings contributes to their total score:
+ * <pre>
+ *  - 'E' contributes 1 point
+ *  - 'M' contributes 3 points
+ *  - 'H' contributes 5 points
+ * </pre>
+ * The winner is determined by comparing their total scores, and in case of a tie, it returns "Tie".
+ * @author ShortThirdMan
+ * @since 1.1.0
+ * @see <a href="https://www.hackerrank.com/challenges/comp-winner">Competition Winner</a>
+ */
 public class CompWinnerEvaluator {
 
     public String evaluateWinner(String erica, String bob) {
@@ -37,7 +49,7 @@ public class CompWinnerEvaluator {
             }
         }
 
-        // Determine the winner using ternary operator
-        return ericaScore > bobScore ? "Erica" : (bobScore > ericaScore ? "Bob" : "Tie");
+        // Determine the winner using a ternary operator
+        return ericaScore > bobScore ? "Erica" : bobScore > ericaScore ? "Bob" : "Tie";
     }
 }

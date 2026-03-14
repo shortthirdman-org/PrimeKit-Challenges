@@ -26,7 +26,6 @@ import java.util.PriorityQueue;
  *
  * @author ShortThirdMan
  */
-@SuppressWarnings("PMD.UselessParentheses")
 public class FetchTweets {
 
     private final List<Tweet> tweets;
@@ -52,10 +51,14 @@ public class FetchTweets {
         // Priority queue to store tweets sorted by distance
         PriorityQueue<Tweet> pq = new PriorityQueue<>((t1, t2) -> {
             // Calculate squared Euclidean distance to avoid floating-point operations
-            int dist1 = (t1.getXCoord() - xCoordOfUser) * (t1.getXCoord() - xCoordOfUser) +
-                    (t1.getYCoord() - yCoordOfUser) * (t1.getYCoord() - yCoordOfUser);
-            int dist2 = (t2.getXCoord() - xCoordOfUser) * (t2.getXCoord() - xCoordOfUser) +
-                    (t2.getYCoord() - yCoordOfUser) * (t2.getYCoord() - yCoordOfUser);
+            int x1Squared = (int) Math.pow(t1.getXCoord() - xCoordOfUser, 2);
+            int y1Squared = (int) Math.pow(t1.getYCoord() - yCoordOfUser, 2);
+            int dist1 = x1Squared + y1Squared;
+
+            int x2Squared = (int) Math.pow(t2.getXCoord() - xCoordOfUser, 2);
+            int y2Squared = (int) Math.pow(t2.getYCoord() - yCoordOfUser, 2);
+            int dist2 = x2Squared + y2Squared;
+
             return Integer.compare(dist1, dist2);
         });
 
@@ -85,7 +88,7 @@ public class FetchTweets {
         }
 
         List<Integer> closestTweets = new ArrayList<>();
-        tweets.sort(Comparator.comparingInt(t -> (Math.abs(t.getXCoord() - xCoordOfUser) + Math.abs(t.getYCoord() - yCoordOfUser))));
+        tweets.sort(Comparator.comparingInt(t -> Math.abs(t.getXCoord() - xCoordOfUser) + Math.abs(t.getYCoord() - yCoordOfUser)));
 
         if (tweets.isEmpty()) {
             return closestTweets;

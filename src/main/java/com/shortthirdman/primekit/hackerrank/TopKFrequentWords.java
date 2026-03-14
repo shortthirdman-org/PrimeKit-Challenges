@@ -11,7 +11,6 @@ import java.util.Map;
  * Given a list of words, return the k most frequent words sorted by frequency and then lexicographically.
  * @author ShortThirdMan
  */
-@SuppressWarnings("PMD.UnusedPrivateMethod")
 public class TopKFrequentWords {
 
     public List<String> topKFrequent(String[] words, int k) {
@@ -36,12 +35,12 @@ public class TopKFrequentWords {
     }
 
     /**
-     * Optimized top-k frequent collection of word
+     * Optimized a top-k frequent collection of word
      * @param words the input array of words
      * @param k the most frequent words value
      * @return
      */
-    private List<String> optimizeTopKFrequent(String[] words, int k) {
+    public List<String> optimizeTopKFrequent(String[] words, int k) {
         if (k <= 0 || words == null || words.length == 0) {
             return Collections.emptyList();
         }
@@ -54,7 +53,7 @@ public class TopKFrequentWords {
 
         // Sort words by frequency (higher first) then lexicographically (null-safe)
         List<String> candidates = new ArrayList<>(frequencyMap.keySet());
-        Collections.sort(candidates, (w1, w2) -> {
+        candidates.sort((w1, w2) -> {
             int freqCompare = frequencyMap.get(w2) - frequencyMap.get(w1);
             if (freqCompare == 0) {
                 // null-safe lexicographic ordering
