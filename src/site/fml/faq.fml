@@ -24,4 +24,14 @@
       </answer>
     </faq>
   </part>
+  <part id="More">
+    <faq id="how">
+      <question>How do I use Maven?</question>
+      <answer>
+        <p>
+          Just type "mvn" at the command line and Maven will do the rest!
+        </p>
+      </answer>
+    </faq>
+  </part>
 </faqs>

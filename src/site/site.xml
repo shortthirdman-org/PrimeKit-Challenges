@@ -1,11 +1,7 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 <site xmlns="http://maven.apache.org/SITE/2.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:schemaLocation="http://maven.apache.org/SITE/2.0.0 https://maven.apache.org/xsd/site-2.0.0.xsd"
       name="PrimeKit Challenges">
-
-    <publishDate format="dd MMMM YYYY ZZZ" position="right"/> <!-- left, right, navigation-top, navigation-bottom, bottom. -->
-
-    <version position="right"/>
 
     <skin>
         <groupId>org.apache.maven.skins</groupId>
@@ -13,13 +9,18 @@
         <version>2.1.0</version>
     </skin>
 
+    <publishDate format="dd MMMM YYYY HH:mm:ss zzzz" position="right"/> <!-- left, right, navigation-top, navigation-bottom, bottom. -->
+
+    <version position="right"/>
+
     <custom>
         <fluidoSkin>
             <topBarEnabled>true</topBarEnabled>
             <sideBarEnabled>true</sideBarEnabled>
-            <breadcrumbDivider>Â»</breadcrumbDivider>
-            <navBarStyle>navbar</navBarStyle>
+            <breadcrumbDivider>»</breadcrumbDivider>
+            <navBarStyle>navbar-inverse</navBarStyle>
             <copyrightClass>pull-right</copyrightClass>
+
             <skipGenerationDate>false</skipGenerationDate>
             <sourceLineNumbersEnabled>true</sourceLineNumbersEnabled>
             <gitHub>
@@ -36,27 +37,29 @@
     </custom>
 
     <body>
-        <menu ref="modules">
+        <menu name="Overview">
             <item name="Home" href="index.html"/>
             <item name="Contact" href="contact.html"/>
-            <item name="FAQ" href="faq.html"/>
         </menu>
+
+        <menu ref="reports"/>
+
+        <menu ref="info"/>
+
+        <menu ref="modules"/>
     </body>
 
     <bannerLeft>
-    <!--<name>PrimeKit Challenges</name>
-    <src>https://maven.apache.org/images/apache-maven-project-2.png</src>
-    <href>https://maven.apache.org/</href>-->
+        <!--https://maven.apache.org/images/apache-maven-project-2.png-->
+        <image src="https://maven.apache.org/images/logos/maven-feather.png" alt="Maven Logo" position="left" width="120"/>
     </bannerLeft>
 
     <bannerRight>
-    <!--<name>PrimeKit Challenges</name>
-    <src>https://maven.apache.org/images/maven-logo-2.gif</src>
-    <href>https://github.com/shortthirdman-org/</href>-->
+        <image src="https://maven.apache.org/images/logos/maven-feather.png" alt="Maven Logo" position="right" width="120"/>
     </bannerRight>
 
     <poweredBy>
-    <!--<logo name="Maven" href="https://maven.apache.org/"
-          img="https://maven.apache.org/images/logos/maven-feather.png"/>-->
+        <logo name="Maven" href="https://maven.apache.org/"
+          target="https://maven.apache.org/images/logos/maven-feather.png"/>
     </poweredBy>
 </site>
