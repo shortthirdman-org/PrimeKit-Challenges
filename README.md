@@ -1,5 +1,8 @@
 # PrimeKit Challenges
 
+[![Chat with Repo](https://badge.forgithub.com/shortthirdman-org/PrimeKit-Challenges?badge=chat)](https://uithub.com/shortthirdman-org/PrimeKit-Challenges)
+[![LLM Context](https://badge.forgithub.com/shortthirdman-org/PrimeKit-Challenges?badge=context)](https://uithub.com/shortthirdman-org/PrimeKit-Challenges)
+
 PrimeKit Coding Challenges
 
 > A collection of Java-based solutions designed to tackle typical coding problems asked in software development interviews.
