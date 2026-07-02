@@ -206,10 +206,10 @@
               <rules>
                 <banDuplicatePomDependencyVersions />
                 <requireMavenVersion>
-                  <version>[3.8.6,4.0.0)</version>
+                  <version>[3.8.8,4.0.0)</version>
                 </requireMavenVersion>
                 <requireJavaVersion>
-                  <version>[15,23)</version>
+                  <version>[15,26)</version>
                 </requireJavaVersion>
               </rules>
             </configuration>
@@ -274,6 +274,7 @@
         <version>3.5.0</version>
         <configuration>
           <threadCount>10</threadCount>
+          <trimStackTrace>true</trimStackTrace>
           <printSummary>true</printSummary>
           <reportFormat>plain</reportFormat>
           <testFailureIgnore>true</testFailureIgnore>
