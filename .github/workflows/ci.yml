@@ -27,14 +27,13 @@ jobs:
     name: Build with Maven
     runs-on: ubuntu-latest
     steps:
-      - name: Get PR event name
-        run: echo "The event type is ${{ github.event.action }}"
-
-      - name: Get branch name
-        run: echo "Branch name is ${{ github.head_ref }}"
+      - name: PR event and Branch name
+        run: |
+          echo "The event type is ${{ github.event.action }}"
+          echo "Branch name is ${{ github.head_ref }}"
 
       - name: Checkout sources
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Set up JDK 21
         uses: actions/setup-java@v5
