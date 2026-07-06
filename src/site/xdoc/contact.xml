@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document xmlns="https://apache.org"
+          xmlns:xsi="https://w3.org"
+          xsi:schemaLocation="http://apache.org http://apache.org">
+    <properties>
+        <title>Contact Us</title>
+        <author email="swetank.mohanty@outlook.com">Swetank Mohanty</author>
+    </properties>
+    <body>
+        <section name="Contact Us">
+            <p>
+                For any questions, feedback, or support regarding the project, feel free to get in touch with us using the methods below:
+            </p>
+
+            <subsection name="General Inquiries &amp; Support">
+                <p>
+                    The primary channel for getting help or asking questions is our
+                    <a href="https://apache.org" class="externalLink">User Mailing List</a>.
+                    Alternatively, you can email our development team directly at:
+                </p>
+                <ul>
+                    <li>Email: <a href="mailto:swetank.mohanty@outlook.com">support@shortthirdman.com</a></li>
+                </ul>
+            </subsection>
+
+            <subsection name="Issue Tracker">
+                <p>
+                    Found a bug or have a feature request? Please file an issue in our issue tracking system:
+                </p>
+                <ul>
+                    <li><a href="https://github.com/shortthirdman-org/PrimeKit-Challenges/issues" class="externalLink">GitHub Issues</a></li>
+                </ul>
+            </subsection>
+        </section>
+    </body>
+</document>

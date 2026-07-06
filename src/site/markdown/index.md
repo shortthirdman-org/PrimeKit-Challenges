@@ -1,11 +1,11 @@
 ### About
 
 <p>
-    PrimeKit Challenges is a collection of programming challenges designed to test and improve your coding skills.
+PrimeKit Challenges is a collection of programming challenges designed to test and improve your coding skills.
 
-    Each challenge focuses on a specific topic or algorithm, providing an opportunity to practice and learn new techniques.
+Each challenge focuses on a specific topic or algorithm, providing an opportunity to practice and learn new techniques.
 
-    Whether you're a beginner or an experienced developer, these challenges will help you enhance your problem-solving abilities and expand your knowledge of programming concepts.
+Whether you're a beginner or an experienced developer, these challenges will help you enhance your problem-solving abilities and expand your knowledge of programming concepts.
 </p>
 
 ---
