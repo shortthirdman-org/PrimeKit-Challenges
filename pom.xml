@@ -41,11 +41,6 @@
       <name>GitHub Packages</name>
       <url>https://maven.pkg.github.com/shortthirdman-org/PrimeKit-Challenges</url>
     </repository>
-    <!--<repository>
-        <id>sonatype</id>
-        <name>Sonatype OSSRH</name>
-        <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-    </repository>-->
   </distributionManagement>
 
   <properties>
@@ -70,9 +65,12 @@
     <gson.version>2.10.1</gson.version>
     <jacoco.version>0.8.10</jacoco.version>
     <mockito.version>5.12.0</mockito.version>
+    <spotbugs.version>4.9.8</spotbugs.version>
     <instancio.version>5.2.1</instancio.version>
     <assertj-core.version>3.25.3</assertj-core.version>
     <pmd-maven-plugin.version>3.26.0</pmd-maven-plugin.version>
+    <surefire-report-plugin.version>3.5.4</surefire-report-plugin.version>
+    <spotbugs-maven-plugin.version>4.9.8.4</spotbugs-maven-plugin.version>
 
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
@@ -99,6 +97,28 @@
       </dependency>
     </dependencies>
   </dependencyManagement>
+
+  <!--<reporting>
+    <plugins>
+      &lt;!&ndash; Surefire Report Plugin for unit test results &ndash;&gt;
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-report-plugin</artifactId>
+        <version>${surefire-report-plugin.version}</version>
+      </plugin>
+
+      &lt;!&ndash; PMD Plugin which includes both PMD and CPD reports &ndash;&gt;
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>${pmd-maven-plugin.version}</version>
+        <configuration>
+          <targetJdk>${java.version}</targetJdk> &lt;!&ndash; Adjust to your Java version &ndash;&gt;
+          <linkXRef>true</linkXRef>
+        </configuration>
+      </plugin>
+    </plugins>
+  </reporting>-->
 
   <dependencies>
     <dependency>
@@ -286,7 +306,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-report-plugin</artifactId>
-        <version>3.5.4</version>
+        <version>${surefire-report-plugin.version}</version>
         <configuration>
           <showSuccess>true</showSuccess>
           <linkXRef>false</linkXRef>
@@ -383,6 +403,7 @@
             <configuration>
               <excludes>
                 <exclude>com/shortthirdman/primekit/common/**</exclude>
+                <exclude>com/shortthirdman/primekit/core/agents/*.java</exclude>
               </excludes>
             </configuration>
           </execution>
@@ -398,6 +419,7 @@
                   <element>PACKAGE</element>
                   <excludes>
                     <exclude>com.shortthirdman.primekit.common</exclude>
+                    <exclude>com.shortthirdman.primekit.core.agents</exclude>
                   </excludes>
                   <limits>
                     <limit implementation="org.jacoco.report.check.Limit">
@@ -416,6 +438,7 @@
                   <element>BUNDLE</element>
                   <excludes>
                     <exclude>com.shortthirdman.primekit.common</exclude>
+                    <exclude>com.shortthirdman.primekit.core.agents</exclude>
                   </excludes>
                   <limits>
                     <limit implementation="org.jacoco.report.check.Limit">
@@ -491,6 +514,42 @@
         <configuration>
           <version>${project.version}</version>
           <dependencyDetailsEnabled>true</dependencyDetailsEnabled>
+        </configuration>
+      </plugin>
+      <!-- SpotBugs Static Analysis -->
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>${spotbugs-maven-plugin.version}</version>
+        <dependencies>
+          <dependency>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs</artifactId>
+            <version>${spotbugs.version}</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>aggregate</id>
+            <goals>
+              <goal>spotbugs-aggregate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <xmlOutput>true</xmlOutput>
+          <effort>Max</effort>
+          <threshold>medium</threshold>
+          <failOnError>false</failOnError>
+          <includeFilterFile>${basedir}/.mvn/spotbugs-security-include.xml</includeFilterFile>
+          <excludeFilterFile>${basedir}/.mvn/spotbugs-security-exclude.xml</excludeFilterFile>
+          <plugins>
+            <plugin>
+              <groupId>com.h3xstream.findsecbugs</groupId>
+              <artifactId>findsecbugs-plugin</artifactId>
+              <version>1.12.0</version>
+            </plugin>
+          </plugins>
         </configuration>
       </plugin>
     </plugins>
