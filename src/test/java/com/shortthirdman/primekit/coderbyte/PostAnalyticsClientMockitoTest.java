@@ -2,7 +2,6 @@ package com.shortthirdman.primekit.coderbyte;
 
 import com.shortthirdman.primekit.common.Post;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.mockito.MockedStatic;
 
 import java.net.http.HttpClient;
@@ -13,24 +12,18 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.mockStatic;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class PostAnalyticsClientMockitoTest {
 
     @Test
     void testFetchPosts_UsingMockito_NoHttpCall() throws Exception {
-
-        // Prepare fake JSON response
         String json = """
-            [
-              {"userId":1,"id":101},
-              {"userId":2,"id":201}
-            ]
-        """;
+        [
+          {"userId":1,"id":101},
+          {"userId":2,"id":201}
+        ]
+    """;
 
         HttpClient mockClient = mock(HttpClient.class);
 
@@ -38,12 +31,10 @@ class PostAnalyticsClientMockitoTest {
         HttpResponse<String> mockResponse = (HttpResponse<String>) mock(HttpResponse.class);
 
         when(mockResponse.body()).thenReturn(json);
-        when(mockClient.send(
-                any(HttpRequest.class),
-                ArgumentMatchers.<HttpResponse.BodyHandler<String>>any()
-        )).thenReturn(mockResponse);
 
-        // Intercept static factory `HttpClient.newHttpClient()`
+        // Fix: Use doReturn to avoid Java compiler generic mismatch on send()
+        doReturn(mockResponse).when(mockClient).send(any(HttpRequest.class), any());
+
         try (MockedStatic<HttpClient> mockedStatic = mockStatic(HttpClient.class)) {
             mockedStatic.when(HttpClient::newHttpClient).thenReturn(mockClient);
 
@@ -53,8 +44,7 @@ class PostAnalyticsClientMockitoTest {
             assertEquals(2, posts.size());
 
             mockedStatic.verify(HttpClient::newHttpClient);
-            verify(mockClient, times(1))
-                    .send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class));
+            verify(mockClient, times(1)).send(any(HttpRequest.class), any());
         }
     }
 
