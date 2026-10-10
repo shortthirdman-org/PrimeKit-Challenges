@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang="">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>NewspaperFormatter xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../apidocs/com/shortthirdman/primekit/codesignal/NewspaperFormatter.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> com.shortthirdman.primekit.codesignal;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> java.util.ArrayList;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> java.util.List;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> * You are moderating a newspaper page, and you have to align the text on the page properly.</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> * The text is provided to you in the following format:</em>
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> * &lt;br/&gt;</em>
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;&lt;b&gt;paragraphs&lt;/b&gt; is an array of paragraphs, where each paragraph is represented as an array of words;&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;&lt;b&gt;aligns&lt;/b&gt; is an array representing the alignment of each paragraph from paragraphs - each element is either "LEFT" or "RIGHT";&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;&lt;b&gt;width&lt;/b&gt; represents the maximum number of characters each line of the output can include.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <em class="jxr_javadoccomment"> * &lt;br/&gt;</em>
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  <em class="jxr_javadoccomment"> * Your task is to produce a newspaper page according to the following specifications:</em>
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  <em class="jxr_javadoccomment"> * &lt;br/&gt;</em>
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;For each paragraph paragraphs[i], include all the words paragraphs[i][j] in order, separated by spaces;&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;Include as many words as possible per each page line (the length of the line must be less than or equal to width),</em>
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  <em class="jxr_javadoccomment"> * and put the next word on a new line if it would exceed the limit;&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;In the case of excess whitespace, words from paragraphs[i] should be aligned according to aligns[i] - if aligns[i] = "LEFT",</em>
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>  <em class="jxr_javadoccomment"> * the line should have trailing spaces, if aligns[i] = RIGHT, it should have leading spaces;&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;Include a border of * characters around all the edges of the result - these characters don't count toward the width,</em>
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>  <em class="jxr_javadoccomment"> * they are just added to make output more pretty.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  <em class="jxr_javadoccomment"> * &lt;p&gt;It is guaranteed that it is possible to justify the given paragraphs to the newspaper.&lt;/p&gt;</em>
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>  <em class="jxr_javadoccomment"> * &lt;br/&gt;</em>
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>  <em class="jxr_javadoccomment"> * Return the resulting newspaper page as an array of strings.</em>
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>  <em class="jxr_javadoccomment"> * @author ShortThirdMan</em>
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="NewspaperFormatter" href="../../../../com/shortthirdman/primekit/codesignal/NewspaperFormatter.html#NewspaperFormatter">NewspaperFormatter</a> {
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>  
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L36" href="#L36">36</a>  <em class="jxr_javadoccomment">     * @param paragraphs the input array of paragraphs</em>
+<a class="jxr_linenumber" name="L37" href="#L37">37</a>  <em class="jxr_javadoccomment">     * @param aligns the alignment array</em>
+<a class="jxr_linenumber" name="L38" href="#L38">38</a>  <em class="jxr_javadoccomment">     * @param width the width</em>
+<a class="jxr_linenumber" name="L39" href="#L39">39</a>  <em class="jxr_javadoccomment">     * @return the array of formatted strings</em>
+<a class="jxr_linenumber" name="L40" href="#L40">40</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="L41" href="#L41">41</a>      <strong class="jxr_keyword">public</strong> String[] formatPage(String[][] paragraphs, String[] aligns, <strong class="jxr_keyword">int</strong> width) {
+<a class="jxr_linenumber" name="L42" href="#L42">42</a>          <strong class="jxr_keyword">if</strong> (width &lt; 5 || width &gt; 100) {
+<a class="jxr_linenumber" name="L43" href="#L43">43</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> StringIndexOutOfBoundsException(<span class="jxr_string">"width should be between 5 and 100"</span>);
+<a class="jxr_linenumber" name="L44" href="#L44">44</a>          }
+<a class="jxr_linenumber" name="L45" href="#L45">45</a>  
+<a class="jxr_linenumber" name="L46" href="#L46">46</a>          List&lt;String&gt; result = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L47" href="#L47">47</a>          String border = <span class="jxr_string">"*"</span>.repeat(width + 2);
+<a class="jxr_linenumber" name="L48" href="#L48">48</a>          result.add(border);
+<a class="jxr_linenumber" name="L49" href="#L49">49</a>  
+<a class="jxr_linenumber" name="L50" href="#L50">50</a>          <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; paragraphs.length; i++) {
+<a class="jxr_linenumber" name="L51" href="#L51">51</a>              String[] words = paragraphs[i];
+<a class="jxr_linenumber" name="L52" href="#L52">52</a>              String align = aligns[i];
+<a class="jxr_linenumber" name="L53" href="#L53">53</a>              List&lt;String&gt; lines = <strong class="jxr_keyword">new</strong> ArrayList&lt;&gt;();
+<a class="jxr_linenumber" name="L54" href="#L54">54</a>              StringBuilder lineBuilder = <strong class="jxr_keyword">new</strong> StringBuilder();
+<a class="jxr_linenumber" name="L55" href="#L55">55</a>  
+<a class="jxr_linenumber" name="L56" href="#L56">56</a>              <strong class="jxr_keyword">for</strong> (String word : words) {
+<a class="jxr_linenumber" name="L57" href="#L57">57</a>                  <strong class="jxr_keyword">if</strong> (lineBuilder.isEmpty()) {
+<a class="jxr_linenumber" name="L58" href="#L58">58</a>                      lineBuilder.append(word);
+<a class="jxr_linenumber" name="L59" href="#L59">59</a>                  } <strong class="jxr_keyword">else</strong> <strong class="jxr_keyword">if</strong> (lineBuilder.length() + 1 + word.length() &lt;= width) {
+<a class="jxr_linenumber" name="L60" href="#L60">60</a>                      lineBuilder.append(<span class="jxr_string">" "</span>).append(word);
+<a class="jxr_linenumber" name="L61" href="#L61">61</a>                  } <strong class="jxr_keyword">else</strong> {
+<a class="jxr_linenumber" name="L62" href="#L62">62</a>                      lines.add(lineBuilder.toString());
+<a class="jxr_linenumber" name="L63" href="#L63">63</a>                      lineBuilder = <strong class="jxr_keyword">new</strong> StringBuilder(word);
+<a class="jxr_linenumber" name="L64" href="#L64">64</a>                  }
+<a class="jxr_linenumber" name="L65" href="#L65">65</a>              }
+<a class="jxr_linenumber" name="L66" href="#L66">66</a>  
+<a class="jxr_linenumber" name="L67" href="#L67">67</a>              <strong class="jxr_keyword">if</strong> (!lineBuilder.isEmpty()) {
+<a class="jxr_linenumber" name="L68" href="#L68">68</a>                  lines.add(lineBuilder.toString());
+<a class="jxr_linenumber" name="L69" href="#L69">69</a>              }
+<a class="jxr_linenumber" name="L70" href="#L70">70</a>  
+<a class="jxr_linenumber" name="L71" href="#L71">71</a>              <strong class="jxr_keyword">for</strong> (String line : lines) {
+<a class="jxr_linenumber" name="L72" href="#L72">72</a>                  <strong class="jxr_keyword">int</strong> spaces = width - line.length();
+<a class="jxr_linenumber" name="L73" href="#L73">73</a>                  String formatted;
+<a class="jxr_linenumber" name="L74" href="#L74">74</a>                  <strong class="jxr_keyword">if</strong> (<span class="jxr_string">"LEFT"</span>.equals(align)) {
+<a class="jxr_linenumber" name="L75" href="#L75">75</a>                      formatted = line + <span class="jxr_string">" "</span>.repeat(spaces);
+<a class="jxr_linenumber" name="L76" href="#L76">76</a>                  } <strong class="jxr_keyword">else</strong> { <em class="jxr_comment">// RIGHT</em>
+<a class="jxr_linenumber" name="L77" href="#L77">77</a>                      formatted = <span class="jxr_string">" "</span>.repeat(spaces) + line;
+<a class="jxr_linenumber" name="L78" href="#L78">78</a>                  }
+<a class="jxr_linenumber" name="L79" href="#L79">79</a>                  result.add(<span class="jxr_string">"*"</span> + formatted + <span class="jxr_string">"*"</span>);
+<a class="jxr_linenumber" name="L80" href="#L80">80</a>              }
+<a class="jxr_linenumber" name="L81" href="#L81">81</a>          }
+<a class="jxr_linenumber" name="L82" href="#L82">82</a>  
+<a class="jxr_linenumber" name="L83" href="#L83">83</a>          result.add(border);
+<a class="jxr_linenumber" name="L84" href="#L84">84</a>          <strong class="jxr_keyword">return</strong> result.toArray(<strong class="jxr_keyword">new</strong> String[0]);
+<a class="jxr_linenumber" name="L85" href="#L85">85</a>      }
+<a class="jxr_linenumber" name="L86" href="#L86">86</a>  }
+</pre>
+<hr/>
+<div id="footer">© 2025–2026 <a href="https://www.shortthirdman.com">ShortThirdMan</a></div>
+</body>
+</html>

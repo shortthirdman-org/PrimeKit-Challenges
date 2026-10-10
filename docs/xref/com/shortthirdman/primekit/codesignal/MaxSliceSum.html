@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang="">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>MaxSliceSum xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../apidocs/com/shortthirdman/primekit/codesignal/MaxSliceSum.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> com.shortthirdman.primekit.codesignal;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <em class="jxr_javadoccomment"> * A non-empty array A consisting of N integers is given. A pair of integers (P, Q), such that &lt;code&gt;0 &amp;le; P &amp;le; Q &amp;lt; N&lt;/code&gt;,</em>
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   <em class="jxr_javadoccomment"> * is called a slice of array &lt;code&gt;A&lt;/code&gt;.&lt;br/&gt;</em>
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <em class="jxr_javadoccomment"> * The sum of a slice &lt;code&gt;(P, Q)&lt;/code&gt; is the total of &lt;code&gt;A[P] + A[P+1] + ... + A[Q]&lt;/code&gt;.</em>
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   <em class="jxr_javadoccomment"> * Write a function:</em>
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>   <em class="jxr_javadoccomment"> * that, given an array A consisting of N integers, returns the maximum sum of any slice of A.</em>
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>   <em class="jxr_javadoccomment"> * Find a maximum sum of a compact subsequence of array elements.</em>
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>  <em class="jxr_javadoccomment"> *</em>
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>  <em class="jxr_javadoccomment"> * @author ShortThirdMan</em>
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  <em class="jxr_javadoccomment"> */</em>
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="MaxSliceSum" href="../../../../com/shortthirdman/primekit/codesignal/MaxSliceSum.html#MaxSliceSum">MaxSliceSum</a> {
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>  
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">int</strong> maxSumForArray(<strong class="jxr_keyword">int</strong>[] A) {
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>          <strong class="jxr_keyword">if</strong> (A == <strong class="jxr_keyword">null</strong> || A.length == 0) {
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>              <strong class="jxr_keyword">throw</strong> <strong class="jxr_keyword">new</strong> IllegalArgumentException(<span class="jxr_string">"Array cannot be null or empty"</span>);
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>          }
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>  
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>          <strong class="jxr_keyword">int</strong> N = A.length;
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>          <strong class="jxr_keyword">if</strong> (N == 1) {
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>              <strong class="jxr_keyword">return</strong> A[0];
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>          }
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>          <strong class="jxr_keyword">int</strong> maxCurrent = A[0];
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>          <strong class="jxr_keyword">int</strong> maxGlobal = A[0];
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>  
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>          <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 1; i &lt; N; i++) {
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>              maxCurrent = Math.max(A[i], maxCurrent + A[i]);
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>              maxGlobal = Math.max(maxGlobal, maxCurrent);
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>          }
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>          <strong class="jxr_keyword">return</strong> maxGlobal;
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>      }
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  }
+</pre>
+<hr/>
+<div id="footer">© 2025–2026 <a href="https://www.shortthirdman.com">ShortThirdMan</a></div>
+</body>
+</html>

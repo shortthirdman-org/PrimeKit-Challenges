@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="" lang="">
+<head><meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>TeamEfficiencyCalculator xref</title>
+<link type="text/css" rel="stylesheet" href="../../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../../apidocs/com/shortthirdman/primekit/hackerrank/TeamEfficiencyCalculator.html">View Javadoc</a></div><pre>
+<a class="jxr_linenumber" name="L1" href="#L1">1</a>   <strong class="jxr_keyword">package</strong> com.shortthirdman.primekit.hackerrank;
+<a class="jxr_linenumber" name="L2" href="#L2">2</a>   
+<a class="jxr_linenumber" name="L3" href="#L3">3</a>   <strong class="jxr_keyword">import</strong> java.util.Collections;
+<a class="jxr_linenumber" name="L4" href="#L4">4</a>   <strong class="jxr_keyword">import</strong> java.util.List;
+<a class="jxr_linenumber" name="L5" href="#L5">5</a>   
+<a class="jxr_linenumber" name="L6" href="#L6">6</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a name="TeamEfficiencyCalculator" href="../../../../com/shortthirdman/primekit/hackerrank/TeamEfficiencyCalculator.html#TeamEfficiencyCalculator">TeamEfficiencyCalculator</a> {
+<a class="jxr_linenumber" name="L7" href="#L7">7</a>   
+<a class="jxr_linenumber" name="L8" href="#L8">8</a>       <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">long</strong> getTotalEfficiency(List&lt;Integer&gt; skill) {
+<a class="jxr_linenumber" name="L9" href="#L9">9</a>           <strong class="jxr_keyword">if</strong> (skill == <strong class="jxr_keyword">null</strong> || skill.isEmpty() || skill.size() % 2 != 0) {
+<a class="jxr_linenumber" name="L10" href="#L10">10</a>              <strong class="jxr_keyword">return</strong> -1; <em class="jxr_comment">// Can't form teams if the list is null or the number of participants isn't even</em>
+<a class="jxr_linenumber" name="L11" href="#L11">11</a>          }
+<a class="jxr_linenumber" name="L12" href="#L12">12</a>  
+<a class="jxr_linenumber" name="L13" href="#L13">13</a>          Collections.sort(skill); <em class="jxr_comment">// Sort the skills to easily form pairs</em>
+<a class="jxr_linenumber" name="L14" href="#L14">14</a>          <strong class="jxr_keyword">int</strong> n = skill.size();
+<a class="jxr_linenumber" name="L15" href="#L15">15</a>  
+<a class="jxr_linenumber" name="L16" href="#L16">16</a>          <em class="jxr_comment">// Additional check for mixed positive and negative skills</em>
+<a class="jxr_linenumber" name="L17" href="#L17">17</a>          <em class="jxr_comment">// This ensures that if there are both negative and positive values, pairing is invalid.</em>
+<a class="jxr_linenumber" name="L18" href="#L18">18</a>          <strong class="jxr_keyword">if</strong> (skill.getFirst() &lt; 0 &amp;&amp; skill.get(n - 1) &gt; 0) {
+<a class="jxr_linenumber" name="L19" href="#L19">19</a>              <strong class="jxr_keyword">return</strong> -1;
+<a class="jxr_linenumber" name="L20" href="#L20">20</a>          }
+<a class="jxr_linenumber" name="L21" href="#L21">21</a>  
+<a class="jxr_linenumber" name="L22" href="#L22">22</a>          <strong class="jxr_keyword">long</strong> totalEfficiency = 0;
+<a class="jxr_linenumber" name="L23" href="#L23">23</a>          <strong class="jxr_keyword">int</strong> targetSum = skill.getFirst() + skill.get(n - 1); <em class="jxr_comment">// Calculate the target sum of skills for all pairs</em>
+<a class="jxr_linenumber" name="L24" href="#L24">24</a>  
+<a class="jxr_linenumber" name="L25" href="#L25">25</a>          <strong class="jxr_keyword">for</strong> (<strong class="jxr_keyword">int</strong> i = 0; i &lt; n / 2; i++) {
+<a class="jxr_linenumber" name="L26" href="#L26">26</a>              <strong class="jxr_keyword">int</strong> sum = skill.get(i) + skill.get(n - 1 - i); <em class="jxr_comment">// Sum of skills for the current pair</em>
+<a class="jxr_linenumber" name="L27" href="#L27">27</a>              <strong class="jxr_keyword">if</strong> (sum != targetSum) {
+<a class="jxr_linenumber" name="L28" href="#L28">28</a>                  <strong class="jxr_keyword">return</strong> -1; <em class="jxr_comment">// Return -1 if a pair doesn't satisfy the condition</em>
+<a class="jxr_linenumber" name="L29" href="#L29">29</a>              }
+<a class="jxr_linenumber" name="L30" href="#L30">30</a>              totalEfficiency += (<strong class="jxr_keyword">long</strong>) skill.get(i) * skill.get(n - 1 - i); <em class="jxr_comment">// Add the product of skills to total efficiency</em>
+<a class="jxr_linenumber" name="L31" href="#L31">31</a>          }
+<a class="jxr_linenumber" name="L32" href="#L32">32</a>  
+<a class="jxr_linenumber" name="L33" href="#L33">33</a>          <strong class="jxr_keyword">return</strong> totalEfficiency;
+<a class="jxr_linenumber" name="L34" href="#L34">34</a>      }
+<a class="jxr_linenumber" name="L35" href="#L35">35</a>  }
+</pre>
+<hr/>
+<div id="footer">© 2025–2026 <a href="https://www.shortthirdman.com">ShortThirdMan</a></div>
+</body>
+</html>
