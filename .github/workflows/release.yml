@@ -153,8 +153,6 @@ jobs:
   publish-docs:
     name: Publish Site and API Docs
     runs-on: ubuntu-latest
-    needs:
-      - release
     if: ${{ github.ref == 'refs/heads/main' && inputs.publishDocs == true }}
     steps:
       - name: Checkout
