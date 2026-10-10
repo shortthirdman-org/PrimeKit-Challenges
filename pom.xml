@@ -4,7 +4,7 @@
 
   <groupId>com.shortthirdman.primekit</groupId>
   <artifactId>primekit-challenges</artifactId>
-  <version>1.2.1-SNAPSHOT</version>
+  <version>1.2.2-SNAPSHOT</version>
   <name>PrimeKit Challenges</name>
   <description>Coding challenges from various platforms</description>
   <url>https://www.github.com/shortthirdman-org/PrimeKit-Challenges</url>
@@ -56,7 +56,7 @@
 
     <buildtime.output.log>true</buildtime.output.log>
 
-    <lombok.version>1.18.32</lombok.version>
+    <lombok.version>1.18.40</lombok.version>
     <mockito.version>5.20.0</mockito.version>
     <junit-jupiter.version>5.10.2</junit-jupiter.version>
     <junit-platform.version>1.10.2</junit-platform.version>
@@ -184,6 +184,12 @@
     <dependency>
       <groupId>org.junit.platform</groupId>
       <artifactId>junit-platform-suite-engine</artifactId>
+      <version>${junit-platform.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-suite-api</artifactId>
       <version>${junit-platform.version}</version>
       <scope>test</scope>
     </dependency>
@@ -329,8 +335,16 @@
           <source>${java.version}</source>
           <target>${java.version}</target>
           <showWarnings>false</showWarnings>
+          <release>${java.version}</release>
           <showDeprecation>false</showDeprecation>
           <encoding>${project.build.sourceEncoding}</encoding>
+          <annotationProcessorPaths>
+            <path>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
+            </path>
+          </annotationProcessorPaths>
         </configuration>
       </plugin>
       <plugin>
@@ -346,6 +360,10 @@
             <exclude>*com.shortthirdman.primekit.common.*</exclude>
             <exclude>*com.shortthirdman.primekit.core.*</exclude>
           </excludes>
+          <argLine>
+            -Dnet.bytebuddy.experimental=true
+            --add-opens java.net.http/java.net.http=ALL-UNNAMED
+          </argLine>
           <properties>
             <configurationParameters>
               junit.jupiter.extensions.autodetection.enabled = true

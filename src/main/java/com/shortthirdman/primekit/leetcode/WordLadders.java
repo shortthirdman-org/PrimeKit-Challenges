@@ -18,7 +18,7 @@ public class WordLadders {
      * @param beginWord the word to begin with
      * @param endWord the word to end with
      * @param wordList the list of words
-     * @return
+     * @return the list of ladders
      */
     public List<List<String>> findLadders(String beginWord, String endWord, List<String> wordList) {
         List<List<String>> result = new ArrayList<>();
@@ -33,7 +33,7 @@ public class WordLadders {
         while (!queue.isEmpty()) {
             LinkedWordNode top = queue.poll();
 
-            //top if have shorter result already
+            //top if you have shorter result already
             if (!result.isEmpty() && top.getDepth() > minLen) {
                 return result;
             }
@@ -61,7 +61,7 @@ public class WordLadders {
                         Collections.reverse(aResult);
                         result.add(aResult);
 
-                        //stop if get shorter result
+                        //stop if you get shorter result
                         if (top.getDepth() <= minLen) {
                             minLen = top.getDepth();
                         } else {
