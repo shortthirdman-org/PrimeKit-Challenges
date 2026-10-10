@@ -30,9 +30,6 @@
   <ciManagement>
     <system>GitHub Actions</system>
     <url>https://github.com/shortthirdman-org/PrimeKit-Challenges/actions</url>
-    <!--<notifiers>
-      <notifier>https://</notifier>
-    </notifiers>-->
   </ciManagement>
 
   <distributionManagement>
@@ -47,11 +44,13 @@
     <user.country>US</user.country>
     <user.language>en</user.language>
     <java.version>21</java.version>
+    <invoker.parallelThreads>8</invoker.parallelThreads>
     <releaseVersion>${project.version}</releaseVersion>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven.compiler.release>${java.version}</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <project.reporting.outputDirectory>target/reports</project.reporting.outputDirectory>
 
     <buildtime.output.log>true</buildtime.output.log>
@@ -98,27 +97,41 @@
     </dependencies>
   </dependencyManagement>
 
-  <!--<reporting>
+  <reporting>
     <plugins>
-      &lt;!&ndash; Surefire Report Plugin for unit test results &ndash;&gt;
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-report-plugin</artifactId>
-        <version>${surefire-report-plugin.version}</version>
-      </plugin>
-
-      &lt;!&ndash; PMD Plugin which includes both PMD and CPD reports &ndash;&gt;
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
         <version>${pmd-maven-plugin.version}</version>
         <configuration>
-          <targetJdk>${java.version}</targetJdk> &lt;!&ndash; Adjust to your Java version &ndash;&gt;
+          <targetJdk>${java.version}</targetJdk>
           <linkXRef>true</linkXRef>
         </configuration>
       </plugin>
+      <!--<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>3.6.0</version> &lt;!&ndash; Use your current version &ndash;&gt;
+        <reportSets>
+          <reportSet>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </reportSet>
+        </reportSets>
+      </plugin>-->
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+       <version>${spotbugs-maven-plugin.version}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>3.6.0</version> <!-- Use the latest version -->
+      </plugin>
     </plugins>
-  </reporting>-->
+  </reporting>
 
   <dependencies>
     <dependency>
@@ -231,6 +244,8 @@
           <generateProjectInfo>true</generateProjectInfo>
           <generateReports>true</generateReports>
           <generateSitemap>true</generateSitemap>
+          <port>9000</port>
+          <tempWebappDirectory>${basedir}/target/site/tempdir</tempWebappDirectory>
         </configuration>
         <dependencies>
           <dependency>
@@ -268,6 +283,7 @@
           <format>html</format>
           <skipPmdError>true</skipPmdError>
           <detail>true</detail>
+          <siteDirectory>${basedir}/docs</siteDirectory>
         </configuration>
         <executions>
           <execution>
@@ -349,7 +365,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.22.2</version>
+        <version>3.5.2</version>
         <configuration>
           <encoding>${project.build.sourceEncoding}</encoding>
           <reportFormat>brief</reportFormat>
@@ -361,6 +377,7 @@
             <exclude>*com.shortthirdman.primekit.core.*</exclude>
           </excludes>
           <argLine>
+            @{argLine}
             -Dnet.bytebuddy.experimental=true
             --add-opens java.net.http/java.net.http=ALL-UNNAMED
           </argLine>
@@ -384,6 +401,15 @@
           <reportFormat>plain</reportFormat>
           <testFailureIgnore>true</testFailureIgnore>
         </configuration>
+        <executions>
+          <execution>
+            <id>failsafe-verify</id>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
@@ -420,8 +446,8 @@
             <phase>test</phase>
             <configuration>
               <excludes>
-                <exclude>com/shortthirdman/primekit/common/**</exclude>
-                <exclude>com/shortthirdman/primekit/core/agents/*.java</exclude>
+                <exclude>com/shortthirdman/primekit/common/**/*.java</exclude>
+                <exclude>com/shortthirdman/primekit/core/**/*.java</exclude>
               </excludes>
             </configuration>
           </execution>
@@ -509,10 +535,28 @@
           <charset>${project.build.sourceEncoding}</charset>
           <locale>${user.language}_${user.country}</locale>
           <failOnError>false</failOnError>
-          <!--<links>
-            <link>https://docs.oracle.com/en/java/javase/${java.version}/docs/api/index.html</link>
-            <link>https://docs.oracle.com/en/java/javase/${java.version}/docs/api/allpackages-index.html</link>
-          </links>-->
+          <links>
+            <!--<link>https://docs.oracle.com/en/java/javase/${java.version}/docs/api/index.html</link>
+            <link>https://docs.oracle.com/en/java/javase/${java.version}/docs/api/allpackages-index.html</link>-->
+            <link>https://docs.oracle.com/en/java/javase/${java.version}/docs/api/</link>
+          </links>
+          <tags>
+            <tag>
+              <name>apiNote</name>
+              <placement>a</placement>
+              <head>API Note:</head>
+            </tag>
+            <tag>
+              <name>implSpec</name>
+              <placement>a</placement>
+              <head>Implementation Requirements:</head>
+            </tag>
+            <tag>
+              <name>implNote</name>
+              <placement>a</placement>
+              <head>Implementation Note:</head>
+            </tag>
+          </tags>
         </configuration>
         <executions>
           <execution>
@@ -531,7 +575,12 @@
         <version>3.9.0</version>
         <configuration>
           <version>${project.version}</version>
+          <detail>true</detail>
+          <groupId>com.shortthirdman.primekit</groupId>
+          <artifactId>primekit-challenges</artifactId>
           <dependencyDetailsEnabled>true</dependencyDetailsEnabled>
+          <siteDirectory>${basedir}/docs</siteDirectory>
+          <outputDirectory>${basedir}/docs</outputDirectory>
         </configuration>
       </plugin>
       <!-- SpotBugs Static Analysis -->
@@ -556,8 +605,12 @@
         </executions>
         <configuration>
           <xmlOutput>true</xmlOutput>
+          <detail>true</detail>
+          <siteDirectory>${basedir}/docs</siteDirectory>
+          <outputDirectory>${basedir}/docs</outputDirectory>
           <effort>Max</effort>
           <threshold>medium</threshold>
+          <fork>false</fork>
           <failOnError>false</failOnError>
           <includeFilterFile>${basedir}/.mvn/spotbugs-security-include.xml</includeFilterFile>
           <excludeFilterFile>${basedir}/.mvn/spotbugs-security-exclude.xml</excludeFilterFile>
