@@ -1,5 +1,9 @@
 # PrimeKit Challenges
 
+![PrimeKit-Challenges](https://socialify.git.ci/shortthirdman-org/PrimeKit-Challenges/image?description=1&font=Raleway&forks=1&issues=1&language=1&name=1&owner=1&pattern=Brick+Wall&pulls=1&stargazers=1&theme=Auto)
+
+---
+
 [![Chat with Repo](https://badge.forgithub.com/shortthirdman-org/PrimeKit-Challenges?badge=chat)](https://uithub.com/shortthirdman-org/PrimeKit-Challenges)
 [![LLM Context](https://badge.forgithub.com/shortthirdman-org/PrimeKit-Challenges?badge=context)](https://uithub.com/shortthirdman-org/PrimeKit-Challenges)
 
@@ -35,12 +39,14 @@ PrimeKit Coding Challenges
     </td>
 	<td style="padding:10px;">
         <a href="https://app.codility.com/" title="Visit Codility">
-            <img height="40" width="40" src="https://cdn.simpleicons.org/codility?viewbox=auto" alt="Codility" />
+            <img height="40" width="40" src="images/codility.png" alt="Codility" />
+            <!--https://cdn.simpleicons.org/codility?viewbox=auto-->
         </a>
     </td>
     <td style="padding:10px;">
         <a href="https://coderbyte.com/" title="Visit CoderByte">
-            <img height="40" width="40" src="https://cdn.simpleicons.org/coderbyte?viewbox=auto" alt="CoderByte" />
+            <img height="40" width="40" src="images/coderbyte.png" alt="CoderByte" />
+            <!--https://cdn.simpleicons.org/coderbyte?viewbox=auto-->
         </a>
     </td>
  </tr>
