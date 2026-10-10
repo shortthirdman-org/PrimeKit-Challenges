@@ -1,4 +1,4 @@
-### About
+### Introduction
 
 <p>
 PrimeKit Challenges is a collection of programming challenges designed to test and improve your coding skills.
@@ -36,12 +36,12 @@ Whether you're a beginner or an experienced developer, these challenges will hel
     </td>
     <td style="padding:10px;">
       <a href="https://app.codility.com/" title="Visit Codility">
-      <img height="40" width="40" src="https://cdn.simpleicons.org/codility?viewbox=auto" alt="Codility" />
+        <img height="40" width="40" src="images/codility.png" alt="Codility" />
       </a>
     </td>
     <td style="padding:10px;">
       <a href="https://coderbyte.com/" title="Visit CoderByte">
-      <img height="40" width="40" src="https://cdn.simpleicons.org/coderbyte?viewbox=auto" alt="CoderByte" />
+      <img height="40" width="40" src="images/coderbyte.png" alt="CoderByte" />
       </a>
     </td>
   </tr>
