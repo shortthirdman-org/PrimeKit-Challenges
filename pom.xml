@@ -8,6 +8,7 @@
   <name>PrimeKit Challenges</name>
   <description>Coding challenges from various platforms</description>
   <url>https://www.github.com/shortthirdman-org/PrimeKit-Challenges</url>
+  <inceptionYear>2025</inceptionYear>
 
   <developers>
     <developer>
@@ -21,15 +22,35 @@
     </developer>
   </developers>
 
+  <organization>
+    <name>ShortThirdMan</name>
+    <url>https://www.shortthirdman.com</url>
+  </organization>
+
+  <ciManagement>
+    <system>GitHub Actions</system>
+    <url>https://github.com/shortthirdman-org/PrimeKit-Challenges/actions</url>
+  </ciManagement>
+
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/shortthirdman-org/PrimeKit-Challenges</url>
+    </repository>
+  </distributionManagement>
+
   <properties>
     <user.country>US</user.country>
     <user.language>en</user.language>
     <java.version>21</java.version>
+    <invoker.parallelThreads>8</invoker.parallelThreads>
     <releaseVersion>${project.version}</releaseVersion>
     <maven.compiler.source>${java.version}</maven.compiler.source>
     <maven.compiler.target>${java.version}</maven.compiler.target>
     <maven.compiler.release>${java.version}</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <project.reporting.outputDirectory>target/reports</project.reporting.outputDirectory>
 
     <buildtime.output.log>true</buildtime.output.log>
@@ -43,9 +64,12 @@
     <gson.version>2.10.1</gson.version>
     <jacoco.version>0.8.10</jacoco.version>
     <mockito.version>5.12.0</mockito.version>
+    <spotbugs.version>4.9.8</spotbugs.version>
     <instancio.version>5.2.1</instancio.version>
     <assertj-core.version>3.25.3</assertj-core.version>
     <pmd-maven-plugin.version>3.26.0</pmd-maven-plugin.version>
+    <surefire-report-plugin.version>3.5.4</surefire-report-plugin.version>
+    <spotbugs-maven-plugin.version>4.9.8.4</spotbugs-maven-plugin.version>
 
     <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
@@ -73,6 +97,42 @@
     </dependencies>
   </dependencyManagement>
 
+  <reporting>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>${pmd-maven-plugin.version}</version>
+        <configuration>
+          <targetJdk>${java.version}</targetJdk>
+          <linkXRef>true</linkXRef>
+        </configuration>
+      </plugin>
+      <!--<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>3.6.0</version> &lt;!&ndash; Use your current version &ndash;&gt;
+        <reportSets>
+          <reportSet>
+            <configuration>
+              <skip>true</skip>
+            </configuration>
+          </reportSet>
+        </reportSets>
+      </plugin>-->
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+       <version>${spotbugs-maven-plugin.version}</version>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jxr-plugin</artifactId>
+        <version>3.6.0</version> <!-- Use the latest version -->
+      </plugin>
+    </plugins>
+  </reporting>
+
   <dependencies>
     <dependency>
       <groupId>org.apache.commons</groupId>
@@ -83,6 +143,11 @@
       <groupId>commons-lang</groupId>
       <artifactId>commons-lang</artifactId>
       <version>2.6</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-math3</artifactId>
+      <version>3.6.1</version>
     </dependency>
     <dependency>
       <groupId>com.google.code.gson</groupId>
@@ -171,6 +236,43 @@
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-site-plugin</artifactId>
+        <version>3.21.0</version>
+        <configuration>
+          <generatedSiteDirectory>${basedir}/docs</generatedSiteDirectory>
+          <outputDirectory>${basedir}/docs</outputDirectory>
+          <generateProjectInfo>true</generateProjectInfo>
+          <generateReports>true</generateReports>
+          <generateSitemap>true</generateSitemap>
+          <port>9000</port>
+          <tempWebappDirectory>${basedir}/target/site/tempdir</tempWebappDirectory>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.maven.skins</groupId>
+            <artifactId>maven-fluido-skin</artifactId>
+            <version>2.1.0</version>
+          </dependency>
+          <dependency>
+            <groupId>org.apache.maven.doxia</groupId>
+            <artifactId>doxia-module-markdown</artifactId>
+            <version>2.0.0</version> <!-- Use a recent version -->
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>default-site</id>
+            <phase>site</phase>
+            <goals>
+              <goal>site</goal>
+              <goal>attach-descriptor</goal>
+              <goal>effective-site</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-pmd-plugin</artifactId>
         <version>${pmd-maven-plugin.version}</version>
         <configuration>
@@ -181,6 +283,7 @@
           <format>html</format>
           <skipPmdError>true</skipPmdError>
           <detail>true</detail>
+          <siteDirectory>${basedir}/docs</siteDirectory>
         </configuration>
         <executions>
           <execution>
@@ -225,7 +328,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-report-plugin</artifactId>
-        <version>3.5.0</version>
+        <version>${surefire-report-plugin.version}</version>
         <configuration>
           <showSuccess>true</showSuccess>
           <linkXRef>false</linkXRef>
@@ -262,7 +365,7 @@
       </plugin>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.22.2</version>
+        <version>3.5.2</version>
         <configuration>
           <encoding>${project.build.sourceEncoding}</encoding>
           <reportFormat>brief</reportFormat>
@@ -274,6 +377,7 @@
             <exclude>*com.shortthirdman.primekit.core.*</exclude>
           </excludes>
           <argLine>
+            @{argLine}
             -Dnet.bytebuddy.experimental=true
             --add-opens java.net.http/java.net.http=ALL-UNNAMED
           </argLine>
@@ -297,6 +401,15 @@
           <reportFormat>plain</reportFormat>
           <testFailureIgnore>true</testFailureIgnore>
         </configuration>
+        <executions>
+          <execution>
+            <id>failsafe-verify</id>
+            <goals>
+              <goal>integration-test</goal>
+              <goal>verify</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
       <plugin>
         <groupId>org.jacoco</groupId>
@@ -333,7 +446,8 @@
             <phase>test</phase>
             <configuration>
               <excludes>
-                <exclude>com/shortthirdman/primekit/common/**</exclude>
+                <exclude>com/shortthirdman/primekit/common/**/*.java</exclude>
+                <exclude>com/shortthirdman/primekit/core/**/*.java</exclude>
               </excludes>
             </configuration>
           </execution>
@@ -349,6 +463,7 @@
                   <element>PACKAGE</element>
                   <excludes>
                     <exclude>com.shortthirdman.primekit.common</exclude>
+                    <exclude>com.shortthirdman.primekit.core.agents</exclude>
                   </excludes>
                   <limits>
                     <limit implementation="org.jacoco.report.check.Limit">
@@ -367,6 +482,7 @@
                   <element>BUNDLE</element>
                   <excludes>
                     <exclude>com.shortthirdman.primekit.common</exclude>
+                    <exclude>com.shortthirdman.primekit.core.agents</exclude>
                   </excludes>
                   <limits>
                     <limit implementation="org.jacoco.report.check.Limit">
@@ -416,13 +532,31 @@
           <encoding>${project.build.sourceEncoding}</encoding>
           <doclint>none</doclint>
           <show>public</show>
+          <charset>${project.build.sourceEncoding}</charset>
+          <locale>${user.language}_${user.country}</locale>
           <failOnError>false</failOnError>
-          <!--<links>
-            <link>https://docs.oracle.com/en/java/javase/${java.version}/docs/api/index.html</link>
-            <link>https://commons.apache.org/proper/commons-lang/apidocs/index.html</link>
-            <link>https://gson.java.net/apidocs/gson-2.10.1/index.html</link>
-            <link>https://assertj.github.io/doc/3.25.3/api/index.html</link>
-          </links>-->
+          <links>
+            <!--<link>https://docs.oracle.com/en/java/javase/${java.version}/docs/api/index.html</link>
+            <link>https://docs.oracle.com/en/java/javase/${java.version}/docs/api/allpackages-index.html</link>-->
+            <link>https://docs.oracle.com/en/java/javase/${java.version}/docs/api/</link>
+          </links>
+          <tags>
+            <tag>
+              <name>apiNote</name>
+              <placement>a</placement>
+              <head>API Note:</head>
+            </tag>
+            <tag>
+              <name>implSpec</name>
+              <placement>a</placement>
+              <head>Implementation Requirements:</head>
+            </tag>
+            <tag>
+              <name>implNote</name>
+              <placement>a</placement>
+              <head>Implementation Note:</head>
+            </tag>
+          </tags>
         </configuration>
         <executions>
           <execution>
@@ -434,6 +568,60 @@
             </goals>
           </execution>
         </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-project-info-reports-plugin</artifactId>
+        <version>3.9.0</version>
+        <configuration>
+          <version>${project.version}</version>
+          <detail>true</detail>
+          <groupId>com.shortthirdman.primekit</groupId>
+          <artifactId>primekit-challenges</artifactId>
+          <dependencyDetailsEnabled>true</dependencyDetailsEnabled>
+          <siteDirectory>${basedir}/docs</siteDirectory>
+          <outputDirectory>${basedir}/docs</outputDirectory>
+        </configuration>
+      </plugin>
+      <!-- SpotBugs Static Analysis -->
+      <plugin>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-maven-plugin</artifactId>
+        <version>${spotbugs-maven-plugin.version}</version>
+        <dependencies>
+          <dependency>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs</artifactId>
+            <version>${spotbugs.version}</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>aggregate</id>
+            <goals>
+              <goal>spotbugs-aggregate</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <xmlOutput>true</xmlOutput>
+          <detail>true</detail>
+          <siteDirectory>${basedir}/docs</siteDirectory>
+          <outputDirectory>${basedir}/docs</outputDirectory>
+          <effort>Max</effort>
+          <threshold>medium</threshold>
+          <fork>false</fork>
+          <failOnError>false</failOnError>
+          <includeFilterFile>${basedir}/.mvn/spotbugs-security-include.xml</includeFilterFile>
+          <excludeFilterFile>${basedir}/.mvn/spotbugs-security-exclude.xml</excludeFilterFile>
+          <plugins>
+            <plugin>
+              <groupId>com.h3xstream.findsecbugs</groupId>
+              <artifactId>findsecbugs-plugin</artifactId>
+              <version>1.12.0</version>
+            </plugin>
+          </plugins>
+        </configuration>
       </plugin>
     </plugins>
   </build>

@@ -17,7 +17,6 @@ import java.util.Queue;
  * If there is no such route, output -1.
  * 
  * @author shortthirdman
- * @category LeetCode
  * 
  */
 public class CheapestFlightsKStops {
